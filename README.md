@@ -116,5 +116,5 @@ This project is a **Graph Visualization Tool** built using **React.js**. It allo
 ### Steps to Run
 1. Clone the repository:
    ```bash
-   git clone [(https://github.com/Pradeep24032004/Graph-Visualizer-Project)]
+   git clone https://github.com/Pradeep24032004/Graph-Visualizer-Project
    cd Graph-Visualizer-Project
