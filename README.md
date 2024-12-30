@@ -12,7 +12,7 @@
    
 ![Screenshot (372)](https://github.com/user-attachments/assets/ed77194d-65fa-4536-b5f2-c3928570e386)  
 
-###Visualization
+### Visualization
 1. After entering the source and destination nodes, the graph visualizes the path and displays the path, the cost to reach the destination, and the time taken.
 
 ![Screenshot (373)](https://github.com/user-attachments/assets/0a287747-7ea4-4eef-abb9-8ac180142aec)
