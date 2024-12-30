@@ -1,5 +1,14 @@
 # Graph-Visualizer-Project
-
+### Functionalities involved
+1. Add node
+2. Add edge
+3. Delete edge
+4. Save Graph
+5. Run Dijkstra
+6. Run BellmanFord
+7. Run MST
+8. Save Grapgh
+   
 ![Screenshot (372)](https://github.com/user-attachments/assets/ed77194d-65fa-4536-b5f2-c3928570e386)  
 
 
