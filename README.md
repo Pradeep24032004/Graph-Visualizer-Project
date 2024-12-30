@@ -70,3 +70,51 @@ This project is a **Graph Visualization Tool** built using **React.js**. It allo
 
 
 ![Screenshot (374)](https://github.com/user-attachments/assets/708b0497-fbea-48d2-a89e-2403e905ebd3)
+
+
+
+## Technologies Used
+
+### Frontend:
+- **React.js**: For building the user interface and managing state.
+- **CSS**: For styling and layout (via `GraphCanvas.css`).
+- **SVG**: For rendering the graph visualization.
+
+### Backend:
+- **Node.js / Express.js** (assumed): For API endpoints to fetch and save graph data.
+- **Axios**: For making HTTP requests to the backend.
+
+---
+
+## How It Works
+
+1. **Initializing the Graph**:
+   - On loading the app, the graph data is fetched from the backend (`GET http://localhost:5000/api/graph`).
+   - Nodes and edges are populated into the state.
+
+2. **Manipulating the Graph**:
+   - Users can add or delete nodes and edges using the buttons provided.
+   - The graph state is updated dynamically, and changes are reflected in real time on the canvas.
+
+3. **Running Algorithms**:
+   - Users can simulate Dijkstra's, Bellman-Ford, or MST algorithms by specifying a start and end node.
+   - The respective algorithm is executed, and the results (path, length, computation time) are displayed.
+
+4. **Saving Graph Data**:
+   - Users can save their graph to the backend for later use or analysis.
+
+5. **Resetting the Graph**:
+   - Clears all graph data from the canvas, allowing users to start fresh.
+
+---
+
+## How to Run the Project
+
+### Prerequisites
+- **Node.js** and **npm** installed on your machine.
+
+### Steps to Run
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
