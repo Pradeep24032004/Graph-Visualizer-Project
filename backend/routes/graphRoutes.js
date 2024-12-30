@@ -34,31 +34,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: 'Error retrieving graph', error: err });
     }
 });
-// Delete a node
-router.delete('/node/:id', async (req, res) => {
-    const nodeId = req.params.id;
 
-    try {
-        const graph = await Graph.findOne();
-        if (!graph) {
-            return res.status(404).send('Graph not found');
-        }
-
-        const nodeExists = graph.nodes.some(node => node.id === nodeId);
-        if (!nodeExists) {
-            return res.status(404).send('Node not found');
-        }
-
-        graph.nodes = graph.nodes.filter(node => node.id !== nodeId);
-        graph.edges = graph.edges.filter(edge => edge.from !== nodeId && edge.to !== nodeId);
-
-        await graph.save();
-        res.status(200).send('Node deleted successfully!');
-    } catch (err) {
-        console.error('Error deleting node:', err);
-        res.status(500).send('Internal server error');
-    }
-});
 
 
 module.exports = router;
