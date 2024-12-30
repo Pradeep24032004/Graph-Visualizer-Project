@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './GraphCanvas.css';
 import runDijkstra from './Algorithms/runDijkstra';
-//import runBellmanFord from './Algorithms/runBellmanFord';
+import runBellmanFord from './Algorithms/runBellmanFord';
 const GraphCanvas = () => {
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
@@ -12,7 +12,7 @@ const GraphCanvas = () => {
     const [path, setPath] = useState([]);
     const [pathLength, setPathLength] = useState(0);
     const [pathTime, setPathTime] = useState(0); // Time taken to find the path
-    const [nodeNameToDelete, setNodeNameToDelete] = useState('');
+    
     
     useEffect(() => {
         axios.get('http://localhost:5000/api/graph')
@@ -46,29 +46,7 @@ const GraphCanvas = () => {
         setEdges(edges.filter(edge => edge.from !== from || edge.to !== to));
     };
 
-    const deleteNode = async () => {
-        if (!nodeNameToDelete.trim()) {
-            alert('Please enter a valid node name.');
-            return;
-        }
-
-        try {
-            const response = await axios.delete(`http://localhost:5000/node/${nodeNameToDelete}`);
-            alert(response.data);
-
-            setNodes(prevNodes => prevNodes.filter(node => node.id !== nodeNameToDelete));
-            setEdges(prevEdges => prevEdges.filter(edge => edge.from !== nodeNameToDelete && edge.to !== nodeNameToDelete));
-            setNodeNameToDelete('');
-        } catch (err) {
-            if (err.response && err.response.data) {
-                alert(err.response.data);
-            } else {
-                console.error('Error deleting node:', err);
-                alert('Failed to delete the node. Please try again.');
-            }
-        }
-    };
-
+    
     const saveGraph = () => {
         axios.post('http://localhost:5000/api/graph', { nodes, edges })
             .then(() => alert('Graph saved!'))
@@ -76,43 +54,7 @@ const GraphCanvas = () => {
     };
     
   
-    const runBellmanFord = () => {
-        const start = prompt('Enter start node:');
-        const end = prompt('Enter end node:');
-
-        const startTime = Date.now(); // Start time measurement
-
-        const distances = {};
-        const previous = {};
-
-        nodes.forEach(node => {
-            distances[node.id] = Infinity;
-            previous[node.id] = null;
-        });
-        distances[start] = 0;
-
-        for (let i = 0; i < nodes.length - 1; i++) {
-            edges.forEach(edge => {
-                const { from, to, weight } = edge;
-                if (distances[from] + weight < distances[to]) {
-                    distances[to] = distances[from] + weight;
-                    previous[to] = from;
-                }
-            });
-        }
-
-        const path = [];
-        let currentNode = end;
-        while (currentNode) {
-            path.unshift(currentNode);
-            currentNode = previous[currentNode];
-        }
-
-        const endTime = Date.now(); // End time measurement
-        setPath(path);
-        setPathLength(distances[end]);
-        setPathTime((endTime - startTime)*1000); // Calculate and set time taken
-    }; 
+    
 
     const runMST = () => {
         const start = prompt('Enter start node:');
@@ -273,7 +215,7 @@ const GraphCanvas = () => {
         <button onClick={() => runDijkstra(nodes, edges, setPath, setPathLength, setPathTime)}>Run Dijkstra</button>
     </div>
     <div className="row">
-        <button onClick={runBellmanFord}>Run Bellman-Ford</button>
+        <button onClick={runBellmanFord(nodes, edges, setPath, setPathLength, setPathTime)}>Run Bellman-Ford</button>
         <button onClick={runMST}>Run MST</button>
         <button onClick={resetGraph}>Reset</button>
     </div>
@@ -288,29 +230,10 @@ const GraphCanvas = () => {
                 </div>
             )}
 
-            <div>
-                <input
-                    type="text"
-                    value={nodeNameToDelete}
-                    onChange={(e) => setNodeNameToDelete(e.target.value)}
-                    placeholder="Node Name to Delete"
-                />
-                <button onClick={deleteNode}>Delete Node</button>
-            </div>
+            
         
         </div>
     );
 };
 
 export default GraphCanvas;
-
-/** <button onClick={addNode}>Add Node</button>
-            <button onClick={addEdge}>Add Edge</button>
-            <button onClick={deleteEdge}>Delete Edge</button>
-            <button onClick={deleteNode}>Delete Node</button>
-            <button onClick={saveGraph}>Save Graph</button>
-            <button onClick={runDijkstra}>Run Dijkstra</button>
-            <button onClick={runBellmanFord}>Run Bellman-Ford</button>
-            <button onClick={runMST}>Run MST</button>
-            <button onClick={resetGraph}>Reset</button>
- */
